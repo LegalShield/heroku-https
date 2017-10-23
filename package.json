@@ -4,7 +4,8 @@
   "description": "Force http to https redirect on Heroku.",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "specs": "./node_modules/.bin/mocha",
+    "test": "npm run specs"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/LegalShield/heroku-https/issues"
   },
-  "homepage": "https://github.com/LegalShield/heroku-https#readme"
+  "homepage": "https://github.com/LegalShield/heroku-https#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1"
+  }
 }

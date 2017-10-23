@@ -3,7 +3,6 @@
 require('../');
 
 const expect = require('chai').expect;
-const Promise = require('bluebird');
 const https = require('../lib');
 
 context('https', function () {
@@ -22,6 +21,7 @@ context('https', function () {
       };
       res = { };
       res.redirect = function () { };
+      res.send = function () { };
       res.status = function (_status) { status = _status; return res; }
 
       middleware = https();
@@ -33,7 +33,6 @@ context('https', function () {
         expect(url).to.eql('https://example.com/path');
         done();
       }
-      console.log(res);
       middleware.ensure(req, res, function (){});
     });
 

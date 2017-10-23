@@ -4,8 +4,7 @@
   "description": "Force http to https redirect on Heroku.",
   "main": "./lib/index.js",
   "scripts": {
-    "specs": "./node_modules/.bin/mocha",
-    "test": "npm run specs"
+    "test": "./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",

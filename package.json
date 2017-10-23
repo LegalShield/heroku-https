@@ -1,0 +1,19 @@
+{
+  "name": "heroku-https",
+  "version": "0.1.0",
+  "description": "Force http to https redirect on Heroku.",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LegalShield/heroku-https.git"
+  },
+  "author": "Jon Storer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LegalShield/heroku-https/issues"
+  },
+  "homepage": "https://github.com/LegalShield/heroku-https#readme"
+}

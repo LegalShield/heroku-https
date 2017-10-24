@@ -26,36 +26,58 @@ context('https', function () {
     middleware = https();
   });
 
-  it('redirects when the req is not insecure', function (done) {
-    res.redirect = function (url) {
-      expect(status).to.eql(301);
-      expect(url).to.eql('https://example.com/path');
-      done();
-    }
-    middleware(req, res, function (){});
-  });
-
-  it('passes back an error when the req is not secure & the original protocol is https & the req is not a GET', function (done) {
-    req.method = 'POST';
-    res.send = function (message) {
-      expect(status).to.eql(403);
-      expect(message).to.eql('https is required');
-      done();
-    }
-    middleware(req, res, function (){});
-  });
-
-  it('passes the request through when the orignial protocol is https', function (done) {
-    req.headers['x-forwarded-proto'] = 'https';
-    middleware(req, res, function (){
-      done();
+  context('when request is secure', function () {
+    it('passes the request through', function (done) {
+      req.headers['x-forwarded-proto'] = 'https';
+      middleware(req, res, function (){
+        done();
+      });
     });
   });
 
-  it('passes the request through when req is secure', function (done) {
-    req.secure = true;
-    middleware(req, res, function (){
-      done();
+  context('when request is not secure', function () {
+    context('when http method is redirectable', function () {
+      it('redirects to https when the http method is GET', function (done) {
+        req.method = 'GET';
+        res.redirect = function (url) {
+          expect(status).to.eql(301);
+          expect(url).to.eql('https://example.com/path');
+          done();
+        }
+        middleware(req, res, function (){});
+      });
+
+      it('redirects to https when the http method is OPTIONS', function (done) {
+        req.method = 'OPTIONS';
+        res.redirect = function (url) {
+          expect(status).to.eql(301);
+          expect(url).to.eql('https://example.com/path');
+          done();
+        }
+        middleware(req, res, function (){});
+      });
+
+      it('redirects to https when the http method is HEAD', function (done) {
+        req.method = 'HEAD';
+        res.redirect = function (url) {
+          expect(status).to.eql(301);
+          expect(url).to.eql('https://example.com/path');
+          done();
+        }
+        middleware(req, res, function (){});
+      });
+    });
+
+    context('when http method is not redirectable', function () {
+      it('errors with message', function (done) {
+        req.method = 'POST';
+        res.send = function (message) {
+          expect(status).to.eql(403);
+          expect(message).to.eql('https is required');
+          done();
+        }
+        middleware(req, res, function (){});
+      });
     });
   });
 });
